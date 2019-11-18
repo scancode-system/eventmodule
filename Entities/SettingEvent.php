@@ -8,4 +8,17 @@ class SettingEvent extends Model
 {
     protected $table = 'setting_event';
 	protected $fillable = ['id', 'title', 'start', 'end', 'goal', 'goal_saller'];
+
+	protected $appends = ['start_end_date'];
+
+	protected $dates = [
+        'start',
+        'end'
+    ];
+
+	public function getStartEndDateAttribute()
+	{
+		return $this->start->format('d/m/Y').' - '.$this->end->format('d/m/Y');
+	}
+
 }

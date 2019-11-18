@@ -4,7 +4,7 @@
 	{{ Form::model($setting_event, ['route' => 'setting_event.update', 'method' => 'put']) }}
 
 	<div class="form-group">
-		{{ Form::label('title', 'nome do Evento') }}
+		{{ Form::label('title', 'Nome do Evento') }}
 		{{ Form::text('title', null, ['class' => 'form-control']) }}
 	</div>
 	<fieldset class="form-group">
@@ -15,7 +15,7 @@
 					<i class="fa fa-calendar"></i>
 				</span>
 			</span>
-			<input class="form-control" name="daterange" type="text">
+			{{ Form::text('start_end_date', null, ['class' => 'form-control']) }}
 		</div>
 	</fieldset>
 	<div class="row">
@@ -52,8 +52,11 @@
 
 
 <script>
-	$('input[name="daterange"]').daterangepicker({
+	$('input[name="start_end_date"]').daterangepicker({
 		opens: 'left',
+		 locale: {
+      format: 'D/M/Y'
+    },
 		ranges: {
 			Today: [moment(), moment()],
 			Yesterday: [moment().subtract(1, 'days'), moment().subtract(1, 'days')],

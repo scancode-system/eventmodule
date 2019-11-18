@@ -27,6 +27,7 @@ class EventServiceProvider extends ServiceProvider
     {
         $this->app->register(RouteServiceProvider::class);
         $this->app->register(ViewComposerServiceProvider::class);
+        $this->app->register(ObserverServiceProvider::class);
     }
 
 

@@ -18,7 +18,9 @@ class CreateSettingEventTable extends Migration
 
             $table->string('title')->default('');
             $table->date('start')->nullable();
-            $table->date('end')->nullable();        
+            $table->date('end')->nullable();
+            $table->decimal('goal', 10, 2)->default(0);
+            $table->decimal('goal_saller', 10, 2)->default(0);
 
             $table->timestamps();
         });

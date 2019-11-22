@@ -40,7 +40,7 @@ class SettingEventRequest extends FormRequest
 
         $this->merge([
             'start' => $start,
-            'end' => $end
+            'end' => $end.' 23:59:59'
         ]);
     }
 

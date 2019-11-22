@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSettingEventTable extends Migration
+class CreateClientNewTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,12 @@ class CreateSettingEventTable extends Migration
      */
     public function up()
     {
-        Schema::create('setting_event', function (Blueprint $table) {
+        Schema::create('client_news', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->string('title')->default('');
-            $table->dateTime('start')->nullable();
-            $table->dateTime('end')->nullable();
-            $table->decimal('goal', 10, 2)->default(0);
-            $table->decimal('goal_saller', 10, 2)->default(0);
+            $table->unsignedBigInteger('client_id')->unique();
+            $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade')->onUpdate('cascade');
+            $table->boolean('new')->default(false);
 
             $table->timestamps();
         });
@@ -33,6 +31,6 @@ class CreateSettingEventTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('setting_event');
+        Schema::dropIfExists('client_news');
     }
 }

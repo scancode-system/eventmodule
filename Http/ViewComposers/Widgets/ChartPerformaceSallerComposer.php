@@ -3,59 +3,45 @@
 namespace Modules\Event\Http\ViewComposers\Widgets;
 
 use Modules\Dashboard\Services\ViewComposer\ServiceComposer; 
+use Modules\Saller\Repositories\SallerRepository;
+use Modules\Event\Repositories\SettingEventRepository;
 
 
 class ChartPerformaceSallerComposer extends ServiceComposer {
 
-    private $sales_names;
-
-    private $names;
-    private $sales;
-    private $best;
+    private $sallers;
+    private $saller;
 
     public function assign($view){
-        $this->sales_names($view->orders_completed);
-
-        $this->names();
-        $this->sales();
-        $this->best();
+        $this->sallers($view->orders_completed);
+        $this->saller();
     }
 
 
-    private function sales_names($orders_completed){
-        $this->sales_names = [];
+    private function sallers($orders_completed){
+        $goal = (SettingEventRepository::load())->goal_saller;
+        $this->sallers = [];
+        $orders_grouped_sallers = $orders_completed->groupBy('order_saller.saller_id');
 
-        $orders_today = $orders_completed->filter(function ($order, $key) {
-            return $order->closing_date->isToday();
-        });
+        $this->sallers = $orders_grouped_sallers->map(function($orders, $name) use($goal) {
+            $name = $orders->first()->order_saller->name;
+            $sales = $orders->sum('total');
+            $porcentage = 0;
+            if($goal > 0) {
+                $porcentage = ($sales*100)/$goal;
+            }
 
-        $orders_sallers = $orders_today->groupBy('order_saller.saller_id');
-
-        foreach ($orders_sallers as $key => $orders_saller) {
-            $name = $orders_saller->first()->order_saller->name;
-            $total = $orders_saller->sum('total');
-            $this->sales_names[$name] = $total; 
-        }
-
-        $this->sales_names = collect($this->sales_names)->sort()->reverse()->slice(0, 5)->toArray();
+            return (object)['percentage' => $porcentage, 'sales' => $sales, 'name' => $name, 'orders' => $orders->count(), 'average_ticket' => $orders->avg('total')];
+        })->sortByDesc('sales');
     }
 
-    private function names(){
-        $this->names = array_keys($this->sales_names);
-    }
-
-    private function sales(){
-        $this->sales = array_values($this->sales_names);
-    }
-
-    private function best(){
-        $this->best = $this->names[0];
+    private function saller(){
+        $this->saller = $this->sallers->first();
     }
 
     public function view($view){
-       $view->with('names', $this->names);
-       $view->with('sales', $this->sales);
-       $view->with('best', $this->best);
+       $view->with('sallers', $this->sallers);
+       $view->with('saller', $this->saller);
    }
 
 }

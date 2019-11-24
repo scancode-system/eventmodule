@@ -14,7 +14,7 @@ class SettingEventRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'title' => 'required'
         ];
     }
 

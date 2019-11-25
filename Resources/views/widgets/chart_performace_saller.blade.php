@@ -2,6 +2,7 @@
 	<div class="card">
 		<div class="card-header">Meta Representantes</div>
 		<div class="card-body pb-0">
+			@if($saller)
 			<div class="row">
 				<div class="col-sm-3">
 					<div class="callout callout-dark my-0">
@@ -46,6 +47,7 @@
 				</div>
 			</div>
 			<hr>
+			@endif
 			<div class="row">
 				@foreach($sallers as $name => $saler)
 				<div class="col-sm-6">

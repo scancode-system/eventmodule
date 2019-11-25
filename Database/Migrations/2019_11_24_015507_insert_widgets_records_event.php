@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Modules\Dashboard\Repositories\WidgetRepository;
 
-class InsertWidgetsRecords extends Migration
+class InsertWidgetsRecordsEvent extends Migration
 {
     /**
      * Run the migrations.

@@ -3,7 +3,7 @@
 namespace Modules\Event\Observers;
 
 use Modules\Event\Entities\SettingEvent;
-use Modules\Order\Repositories\SettingOrderRepository;
+use Modules\Pdf\Repositories\SettingPdfRepository;
 use Illuminate\Support\Facades\DB;
 
 class SettingEventObserver
@@ -13,7 +13,7 @@ class SettingEventObserver
 	{
 
 		if($setting_event->isDirty('title')){
-			SettingOrderRepository::update(['pdf_title' => $setting_event->title]);
+			SettingPdfRepository::update(['title' => $setting_event->title]);
 		}
 	}	
 

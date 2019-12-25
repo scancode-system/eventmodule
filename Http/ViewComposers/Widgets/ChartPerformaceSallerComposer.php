@@ -4,7 +4,6 @@ namespace Modules\Event\Http\ViewComposers\Widgets;
 
 use Modules\Dashboard\Services\ViewComposer\ServiceComposer; 
 use Modules\Saller\Repositories\SallerRepository;
-use Modules\Event\Repositories\SettingEventRepository;
 
 
 class ChartPerformaceSallerComposer extends ServiceComposer {
@@ -19,12 +18,13 @@ class ChartPerformaceSallerComposer extends ServiceComposer {
 
 
     private function sallers($orders_completed){
-        $goal = (SettingEventRepository::load())->goal_saller;
         $this->sallers = [];
         $orders_grouped_sallers = $orders_completed->groupBy('order_saller.saller_id');
 
-        $this->sallers = $orders_grouped_sallers->map(function($orders, $name) use($goal) {
+        $this->sallers = $orders_grouped_sallers->map(function($orders, $name) {
             $name = $orders->first()->order_saller->name;
+            $goal = $orders->first()->order_saller->saller->goal; 
+
             $sales = $orders->sum('total');
             $porcentage = 0;
             if($goal > 0) {

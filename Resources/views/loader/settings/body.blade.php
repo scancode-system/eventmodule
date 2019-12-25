@@ -25,12 +25,6 @@
 				{{ Form::number('goal', null, ['class' => 'form-control']) }}
 			</div>
 		</div>
-		<div class="col">
-			<div class="form-group">
-				{{ Form::label('goal_saller', 'Meta por Representante') }}
-				{{ Form::number('goal_saller', null, ['class' => 'form-control']) }}
-			</div>
-		</div>
 	</div>
 
 	{{ Form::button('<i class="fa fa-save"></i><span>Salvar</span>', ['class' => 'btn btn-brand btn-primary', 'type' => 'submit']) }}

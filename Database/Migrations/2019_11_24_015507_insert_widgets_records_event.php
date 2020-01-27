@@ -14,8 +14,9 @@ class InsertWidgetsRecordsEvent extends Migration
      */
     public function up()
     {
-WidgetRepository::storeMany([
-            ['name' => 'Gráfico - Performace dos Representantes', 'columns' => 12, 'view' => 'event::widgets.chart_performace_saller']        
+        WidgetRepository::storeMany([
+            ['name' => 'Gráfico - Performace dos Representantes', 'columns' => 12, 'view' => 'event::widgets.chart_performace_saller'],
+            ['name' => 'Gráfico - Meta Geral', 'columns' => 12, 'view' => 'event::widgets.goal']        
         ]);
     }
 

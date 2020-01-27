@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 use Modules\Event\Http\ViewComposers\Settings\SettingComposer;
 use Modules\Event\Http\ViewComposers\Widgets\ChartPerformaceSallerComposer;
+use Modules\Event\Http\ViewComposers\Widgets\GoalComposer;
 
 class ViewComposerServiceProvider extends ServiceProvider {
 
@@ -15,6 +16,7 @@ class ViewComposerServiceProvider extends ServiceProvider {
 
 		// widgets
 		View::composer('event::widgets.chart_performace_saller', ChartPerformaceSallerComposer::class);
+		View::composer('event::widgets.goal', GoalComposer::class);
 	}
 
 	public function register() {
